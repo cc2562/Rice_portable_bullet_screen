@@ -1,16 +1,29 @@
-# danmuhand
+# Rice portable bullet screen 米饭随身弹幕
 
 A new Flutter project.
 
-## Getting Started
+可以轻松的将手机作为LED显示屏显示文字
+You can easily display text on your phone as an LED screen
 
-This project is a starting point for a Flutter application.
+## Currently implemented 目前实现的功能
 
-A few resources to get you started if this is your first Flutter project:
+- 输入文字
+- 设置文字大小
+- 设置文字颜色
+- 设置背景颜色
+- 设置移动速度
+- enter text
+- set the text size
+- set the text color
+- set the background color
+- set the speed of movement
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Planned implementation of the function 计划实现的功能
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 播放音乐
+- 设置图片背景
+- 设置字体
+
+- play the music
+- set the background of the image
+- set the font
