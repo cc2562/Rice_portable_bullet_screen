@@ -1,12 +1,19 @@
+import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 //颜色选择
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:sleek_button/sleek_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'show.dart';
 import 'about.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'procy.dart';
+import 'fuwu.dart';
+import 'package:is_first_run/is_first_run.dart';
+import '/fun/cunchu.dart';
 //权限申请
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +22,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+
 
   // This widget is the root of your application.
   @override
@@ -39,6 +48,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
+  Uri _url = Uri.parse('./proocy.html');
+  Future<void> _lunchYinsi() async {
+    if (!await launchUrl(_url)) {
+      throw 'Could not launch $_url';
+    }
+  }
 // 以下为字体颜色选择
   Color pickerColor = Color(0xffffffff);
   Color currentColor = Color(0xffffffff);
@@ -136,13 +152,19 @@ class _HomeState extends State<Home> {
 
     print("弹框关闭 $currentColorback");
   }
+  ///sp工具类
+
 
   void quanxian() async {
+
     bool? isSelect = await showDialog<bool>(
       context: context,
+      barrierDismissible: true,
       builder: (context) {
-        return AlertDialog(
-          title: Text("选择颜色"),
+        return WillPopScope(
+            onWillPop: () async => false,
+        child: AlertDialog(
+          title: Text("服务协议和隐私政策"),
           //title 的内边距，默认 left: 24.0,top: 24.0, right 24.0
           //默认底部边距 如果 content 不为null 则底部内边距为0
           //            如果 content 为 null 则底部内边距为20
@@ -150,20 +172,15 @@ class _HomeState extends State<Home> {
           //标题文本样式
           titleTextStyle: TextStyle(color: Colors.black87, fontSize: 16),
           //中间显示的内容
-          content: Text("quanxian"),
+          content: Text("请你务必谨慎阅读、充分理解”服务协议“和”隐私政策条款“，如你同意，请点击同意开始接受我们的服务。"),
           actions: <Widget>[
             SleekButton(
-              child: const Text('确定'),
+              child: const Text('同意'),
               style: SleekButtonStyle.light(
                   context: context
               ),
               onTap: () {
-                void requestPermiss(Permission permission) async {
-                  //多个权限申请
-                  Map<Permission, PermissionStatus> statuses = await [
-                    Permission.sms,
-                  ].request();
-                }
+                getit();
                 Navigator.of(context).pop();
               },
             ),
@@ -173,16 +190,58 @@ class _HomeState extends State<Home> {
                   context: context
               ),
               onTap: () {
-                Navigator.of(context).pop();
+
+                //Navigator.of(context).pop();
+                exit(0);
               },
             ),
+            SleekButton(
+              child: const Text('阅读隐私政策'),
+              style: SleekButtonStyle.light(
+                  context: context
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>procyview())
+                );
+              },
+            ),
+            SleekButton(
+              child: const Text('阅读服务协议'),
+              style: SleekButtonStyle.light(
+                  context: context
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>fuwuvive())
+                );
+              },
+            ),
+
           ],
+        ),
         );
       },
     );
   }
 
+  bool? _isFirstRun;
 
+  void _checkFirstRun() async {
+    bool ifr = await nexttime();
+    setState(() {
+      _isFirstRun = ifr;
+      if(_isFirstRun==false){
+        quanxian();
+      }
+    });
+  }
+
+  void initState() {
+    super.initState();
+    //界面build完成后执行回调函数
+    _checkFirstRun();
+  }
 
   var neirong;
   double sliderValue = 90;
