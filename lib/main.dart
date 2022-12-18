@@ -14,6 +14,7 @@ import 'procy.dart';
 import 'fuwu.dart';
 import 'package:is_first_run/is_first_run.dart';
 import '/fun/cunchu.dart';
+import 'boarding.dart';
 //权限申请
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -233,16 +234,33 @@ class _HomeState extends State<Home> {
       _isFirstRun = ifr;
       if(_isFirstRun==false){
         quanxian();
+
       }
     });
   }
 
+  void newversionpop() async{
+    bool ispop = await isversion() ;
+    setState(() {
+      if(ispop == false){
+        Future.delayed(
+            Duration.zero,(){
+          showModalBottomSheet(context: context,
+            isScrollControlled: true,
+            enableDrag: false,
+            isDismissible: false,
+            builder:(_)=> const Onbording(),);
+        }
+        );
+      }
+    });
+  }
   void initState() {
     super.initState();
     //界面build完成后执行回调函数
     _checkFirstRun();
+    newversionpop();
   }
-
   var neirong;
   double sliderValue = 90;
   double settextlin = 100;

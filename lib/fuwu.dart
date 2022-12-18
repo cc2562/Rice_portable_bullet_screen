@@ -61,13 +61,7 @@ class _fuwuviveState extends State<fuwuvive> {
   联系我们
 </strong></p> <p>
   如果您对我的隐私政策有任何疑问或建议，请随时通过syywqs@foxmail.com 与我联系。
-</p> <br> <p>
-  此条款和条件页面是由
-  <a href="https://app.mukapp.top/ppg/" target="_blank">
-    应用隐私政策生成器
-  </a>
-  生成的。
-</p>
+</p> <br> 
 </body>
 </html>
       """);
